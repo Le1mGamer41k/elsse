@@ -4,9 +4,11 @@ import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { ShoppingCart, Leaf } from "lucide-react"
 import { useCart } from "@/context/cart-context"
+import { useState } from "react"
 
 export function Header() {
   const { totalItems } = useCart()
+  const [isEcoDropdownOpen, setIsEcoDropdownOpen] = useState(false)
 
   return (
     <header className="bg-white shadow-sm border-b">
@@ -25,51 +27,57 @@ export function Header() {
             <Link href="/" className="text-gray-700 hover:text-green-500">
               Home
             </Link>
-            <Link href="/menu" className="text-gray-700 hover:text-green-500">
+            <Link href="/menu/" className="text-gray-700 hover:text-green-500">
               Menu
             </Link>
-            <Link href="/blog" className="text-gray-700 hover:text-green-500">
+            <Link href="/blog/" className="text-gray-700 hover:text-green-500">
               Blog
             </Link>
-            <Link href="/pricing" className="text-gray-700 hover:text-green-500">
+            <Link href="/pricing/" className="text-gray-700 hover:text-green-500">
               Pricing
             </Link>
-            <div className="relative group">
+            <div
+              className="relative"
+              onMouseEnter={() => setIsEcoDropdownOpen(true)}
+              onMouseLeave={() => setIsEcoDropdownOpen(false)}
+            >
               <button className="text-gray-700 hover:text-green-500 flex items-center">
                 <Leaf className="w-4 h-4 mr-1" />
                 Eco
               </button>
-              <div className="absolute top-full left-0 mt-1 w-48 bg-white shadow-lg rounded-lg border opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
-                <Link
-                  href="/sustainability"
-                  className="block px-4 py-2 text-sm text-gray-700 hover:bg-green-50 hover:text-green-600"
-                >
-                  🌱 Sustainability
-                </Link>
-                <Link
-                  href="/eco-calculator"
-                  className="block px-4 py-2 text-sm text-gray-700 hover:bg-green-50 hover:text-green-600"
-                >
-                  📊 Carbon Calculator
-                </Link>
-                <Link
-                  href="/trees"
-                  className="block px-4 py-2 text-sm text-gray-700 hover:bg-green-50 hover:text-green-600"
-                >
-                  🌳 Tree Planting
-                </Link>
-              </div>
+              {isEcoDropdownOpen && (
+                <div className="absolute top-full left-0 mt-1 w-48 bg-white shadow-lg rounded-lg border z-50">
+                  <Link
+                    href="/sustainability/"
+                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-green-50 hover:text-green-600"
+                  >
+                    🌱 Sustainability
+                  </Link>
+                  <Link
+                    href="/eco-calculator/"
+                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-green-50 hover:text-green-600"
+                  >
+                    📊 Carbon Calculator
+                  </Link>
+                  <Link
+                    href="/trees/"
+                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-green-50 hover:text-green-600"
+                  >
+                    🌳 Tree Planting
+                  </Link>
+                </div>
+              )}
             </div>
-            <Link href="/contact" className="text-gray-700 hover:text-green-500">
+            <Link href="/contact/" className="text-gray-700 hover:text-green-500">
               Contact
             </Link>
           </nav>
 
           <div className="flex items-center space-x-4">
-            <Link href="/login" className="text-gray-700 hover:text-green-500">
+            <Link href="/login/" className="text-gray-700 hover:text-green-500">
               Login
             </Link>
-            <Link href="/cart" className="relative">
+            <Link href="/cart/" className="relative">
               <ShoppingCart className="w-6 h-6 text-gray-700" />
               {totalItems > 0 && (
                 <span className="absolute -top-2 -right-2 bg-green-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
@@ -78,7 +86,7 @@ export function Header() {
               )}
             </Link>
             <Button asChild className="bg-green-500 hover:bg-green-600">
-              <Link href="/signup">Sign Up</Link>
+              <Link href="/signup/">Sign Up</Link>
             </Button>
           </div>
         </div>
